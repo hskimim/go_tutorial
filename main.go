@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"strings"
+
+	//"github.com/hskimim/go_tutorial/accounts"
+	"github.com/hskimim/go_tutorial/mydict"
 )
 
 func multiply(a int, b int) int {
@@ -76,17 +79,38 @@ func structExample() string {
 	hskimim := hyunsikkim{name: "hyunsikkim", age: 23, hobby: hobby_ls}
 	return hskimim.name
 }
+
+// func main() {
+// 	length, upper_name := lenAndUpper("hyunsikkim")
+// 	fmt.Println(length, upper_name)
+
+// 	repeat("hello", "my", "name", "is", "hyunsikkim")
+// 	fmt.Println(addNumebers(12, 3, 4, 5, 6))
+
+// 	fmt.Println(canIdrink(24))
+// 	fmt.Println(canIdrinkSwitch(23))
+// 	fmt.Println(pointerTest())
+// 	fmt.Println(sliceExample())
+// 	fmt.Println(mapExample()["key"])
+// 	fmt.Println(structExample())
+// }
+
+// func main() {
+// 	account := accounts.NewAccount("hskimim")
+// 	account.Deposit(10)
+// 	err := account.Withdraw(100)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	fmt.Println(account)
+// }
+
 func main() {
-	length, upper_name := lenAndUpper("hyunsikkim")
-	fmt.Println(length, upper_name)
-
-	repeat("hello", "my", "name", "is", "hyunsikkim")
-	fmt.Println(addNumebers(12, 3, 4, 5, 6))
-
-	fmt.Println(canIdrink(24))
-	fmt.Println(canIdrinkSwitch(23))
-	fmt.Println(pointerTest())
-	fmt.Println(sliceExample())
-	fmt.Println(mapExample()["key"])
-	fmt.Println(structExample())
+	dictionary := mydict.Dictionary{"first": "first word"}
+	value, err := dictionary.Search("second")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(value)
+	}
 }
