@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-const fileName string = fileName
+const fileName string = "job.csv"
 
 func main() {
 	e := echo.New()
