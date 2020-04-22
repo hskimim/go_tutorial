@@ -1,4 +1,4 @@
-package main
+package word_count
 
 import (
 	"encoding/csv"
@@ -23,7 +23,8 @@ type infoDict struct {
 
 func main() {
 	start := time.Now()
-	contentLs := extractContent("job.csv")
+	data := readCSV("job.csv")
+	contentLs := extractContent(data)
 	wordCountMap := WordCount(contentLs)
 	writeWordCount("content_wc.csv", wordCountMap)
 	// Code to measure
@@ -32,7 +33,7 @@ func main() {
 	fmt.Println(duration)
 }
 
-func readCSV(filename string, c chan []infoDict){
+func readCSV(filename string) []infoDict{
 	var data []infoDict
 	csvFile, err := os.Open(filename)
 	checkErr(err)
@@ -48,15 +49,12 @@ func readCSV(filename string, c chan []infoDict){
 			location: line[3],
 			content:  line[4],
 		}
-		data = append(data, tmp)
+	data = append(data, tmp)
 	}
-	c <-data
+	return data
 }
 
-func extractContent(filename string) []string {
-	c := make(chan []infoDict)
-	go readCSV(filename, c)
-	data := <- c
+func extractContent(data []infoDict) []string {
 	contentContainer := []string{}
 	for _, line := range data {
 		contentContainer = append(contentContainer, line.content)
@@ -78,26 +76,19 @@ func preprocessText(s string) string {
 	return processedString
 }
 
-func TotalWordCount(contentLs []string) map[string]int {
-	c := make(chan map[string]int)
-	wcSlice := []map[string]int{}
-	for _, content := range contentLs {
-		go WordCount(content, c)
-		wc := <- c
-		wcSlice = append(wcSlice,wc)
-	}
+func WordCount(contentLs []string) map[string]int {
 
-}
-
-func WordCount(s string, c chan map[string]int) {
 	wordCountMap := make(map[string]int)
-	words := strings.Fields(content) //split sentence by " "
-	for _, word := range words {
-		processedText := preprocessText(word)
-		wordCountMap[processedText]++
+	for _, content := range contentLs {
+		words := strings.Fields(content) //split sentence by " "
+		for _, word := range words {
+			processedText := preprocessText(word)
+			wordCountMap[processedText]++
+		}
 	}
-	c <- wordCountMap
+	return wordCountMap
 }
+
 func get_keys(mymap map[string]int) []string {
 	keys := make([]string, len(mymap))
 	i := 0

@@ -120,7 +120,7 @@ func writeJobs(jobs []infoDict) {
 	checkErr(wErr)
 
 	for _, job := range jobs{
-		jobSlice := []string{job.title, job.corpname, job.location, job.content}
+		jobSlice := []string{job.id, job.title, job.corpname, job.location, job.content}
 		jbErr := w.Write(jobSlice)
 		checkErr(jbErr)
 	}
