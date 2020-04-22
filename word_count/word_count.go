@@ -21,11 +21,11 @@ type infoDict struct {
 	content string
 }
 
-func main() {
+func WordCount() {
 	start := time.Now()
 	data := readCSV("job.csv")
 	contentLs := extractContent(data)
-	wordCountMap := WordCount(contentLs)
+	wordCountMap := wordCount(contentLs)
 	writeWordCount("content_wc.csv", wordCountMap)
 	// Code to measure
 	duration := time.Since(start)
@@ -33,7 +33,7 @@ func main() {
 	fmt.Println(duration)
 }
 
-func readCSV(filename string) []infoDict{
+func readCSV(filename string) []infoDict {
 	var data []infoDict
 	csvFile, err := os.Open(filename)
 	checkErr(err)
@@ -76,7 +76,7 @@ func preprocessText(s string) string {
 	return processedString
 }
 
-func WordCount(contentLs []string) map[string]int {
+func wordCount(contentLs []string) map[string]int {
 
 	wordCountMap := make(map[string]int)
 	for _, content := range contentLs {
